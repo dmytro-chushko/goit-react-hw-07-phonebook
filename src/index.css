@@ -1,6 +1,11 @@
 /* @import-normalize;  */
 /* bring in normalize.css styles */
 @import 'normalize.css';
+@import 'rsuite/dist/rsuite.min.css';
+
+* {
+  box-sizing: content-box;
+}
 
 body {
   margin: 0;
@@ -9,6 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
 code {
@@ -46,6 +52,6 @@ button {
 button:hover,
 button:focus {
   outline: none;
-  background-color: gray;
+  background-color: grey;
   color: #fff;
 }
