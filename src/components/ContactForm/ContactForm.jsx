@@ -1,6 +1,7 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { contactsSelectors, contactsOperations } from 'redux/contacts';
 
@@ -13,6 +14,7 @@ const ContactForm = () => {
   const contacts = useSelector(getContactsSelector);
   const pending = useSelector(getPending);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const inputNameId = nanoid();
   const inputNumberId = nanoid();
 
@@ -31,9 +33,16 @@ const ContactForm = () => {
 
     const phone = form.elements.phone.value;
 
+    setIsLoading(true);
     dispatch(contactsOperations.addContact({ name, phone }));
     form.reset();
   };
+
+  useEffect(() => {
+    if (!pending && isLoading) {
+      setIsLoading(false);
+    }
+  }, [pending, isLoading]);
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
@@ -64,7 +73,7 @@ const ContactForm = () => {
         />
       </label>
       <button className={css.button} type="submit">
-        {pending ? (
+        {isLoading ? (
           <Loader className={css.buttonIcon} size="sm" />
         ) : (
           <IoMdPersonAdd className={css.buttonIcon} size={18} />

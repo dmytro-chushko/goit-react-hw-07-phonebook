@@ -1,5 +1,5 @@
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
-import * as contactsOperations from 'redux/contacts/contactsOperations';
+import { contactsOperations, contactsActions } from 'redux/contacts';
 
 const { getContacts, addContact, deleteContact } = contactsOperations;
 
@@ -30,8 +30,13 @@ const error = createReducer(false, {
   [deleteContact.pending]: () => null,
 });
 
+const filter = createReducer('', {
+  [contactsActions.setFilter]: (_, action) => action.payload,
+});
+
 export default combineReducers({
   items,
   isLoading,
   error,
+  filter,
 });

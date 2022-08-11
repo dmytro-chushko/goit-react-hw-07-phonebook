@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { contactsOperations, contactsSelectors } from 'redux/contacts';
@@ -7,8 +6,10 @@ import { getVisibleContacts } from 'helpers/getVisibleContacts';
 
 import ContactItem from 'components/ContactItem';
 
-const ContactList = ({ filter }) => {
-  const contacts = useSelector(contactsSelectors.getContactsSelector);
+const ContactList = () => {
+  const { getContactsSelector, getFilterSelector } = contactsSelectors;
+  const contacts = useSelector(getContactsSelector);
+  const filter = useSelector(getFilterSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,10 +25,6 @@ const ContactList = ({ filter }) => {
       </ul>
     </>
   );
-};
-
-ContactList.propTypes = {
-  filter: PropTypes.string.isRequired,
 };
 
 export default ContactList;
